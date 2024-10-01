@@ -3,8 +3,12 @@ import { AnimalData, Cat, CatImage, Dog, DogImage } from './apiTypes'
 
 export const fetchData = async (): Promise<AnimalData[]> => {
 	const [dogData, catData] = await Promise.all<[Dog, Cat]>([
-		fetch('https://api.thedogapi.com/v1/breeds').then(res => res.json()),
-		fetch('https://api.thecatapi.com/v1/breeds').then(res => res.json()),
+		fetch('https://api.thedogapi.com/v1/breeds', { cache: 'no-store' }).then(
+			res => res.json()
+		),
+		fetch('https://api.thecatapi.com/v1/breeds', { cache: 'no-store' }).then(
+			res => res.json()
+		),
 	])
 
 	const dogs = dogData.map((dog): AnimalData => ({ animal: dog, type: 'dog' }))
